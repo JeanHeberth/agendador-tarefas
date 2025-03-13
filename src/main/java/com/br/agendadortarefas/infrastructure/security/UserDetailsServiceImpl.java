@@ -3,17 +3,17 @@ package com.br.agendadortarefas.infrastructure.security;
 
 import com.br.agendadortarefas.business.dto.UsuarioDTO;
 import com.br.agendadortarefas.infrastructure.client.UsuarioClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl {
 
-    @Autowired
-    private UsuarioClient usuarioClient;
+    private final UsuarioClient usuarioClient;
 
     public UserDetails carregaDadosUsuario(String email, String token) throws UsernameNotFoundException {
 
