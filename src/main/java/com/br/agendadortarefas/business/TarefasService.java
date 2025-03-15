@@ -23,6 +23,7 @@ public class TarefasService {
     public TarefasDTO gravarTarefa(TarefasDTO tarefasDTO, String token) {
         String email = jwtUtil.extrairEmailDoToken(token.substring(7));
         tarefasDTO.setDataCriacao(LocalDateTime.now());
+        tarefasDTO.setDataEvento(tarefasDTO.converterParaUTC(tarefasDTO.getDataEvento()));
         tarefasDTO.setStatusNotificacaoEnum(PENDENTE);
         tarefasDTO.setEmailUsuario(email);
 
