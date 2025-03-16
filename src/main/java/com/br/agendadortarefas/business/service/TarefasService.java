@@ -1,4 +1,4 @@
-package com.br.agendadortarefas.business;
+package com.br.agendadortarefas.business.service;
 
 import com.br.agendadortarefas.business.dto.TarefasDTO;
 import com.br.agendadortarefas.business.mapper.TarefasConverter;
@@ -42,8 +42,8 @@ public class TarefasService {
 
     public List<TarefasDTO> buscarTarefasPorEmail(String token) {
         String email = jwtUtil.extrairEmailDoToken(token.substring(7));
-        List<TarefasEntity> listaTarefeas = tarefaRepository.findByEmailUsuario(email);
-        return tarefasConverter.paraTarefasDTO(listaTarefeas);
+        return tarefasConverter.paraTarefasDTO(
+                tarefaRepository.findByEmailUsuario(email));
     }
 
 }

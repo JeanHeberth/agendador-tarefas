@@ -1,6 +1,6 @@
 package com.br.agendadortarefas.controller;
 
-import com.br.agendadortarefas.business.TarefasService;
+import com.br.agendadortarefas.business.service.TarefasService;
 import com.br.agendadortarefas.business.dto.TarefasDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,7 +32,8 @@ public class TarefasController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<TarefasDTO>> buscarTarefasPorEmail(@RequestHeader("Authorization") String token){
-        return ResponseEntity.ok(tarefaService.buscarTarefasPorEmail(token));
+    public ResponseEntity<List<TarefasDTO>> buscarTarefasPorEmail(@RequestHeader("Authorization") String token) {
+        List<TarefasDTO> tarefas = tarefaService.buscarTarefasPorEmail(token);
+        return ResponseEntity.ok(tarefas);
+        }
     }
-}
