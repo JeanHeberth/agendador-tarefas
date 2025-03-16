@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.br.agendadortarefas.infrastructure.enums.StatusNotificacaoEnum.*;
 
@@ -23,7 +24,6 @@ public class TarefasService {
     public TarefasDTO gravarTarefa(TarefasDTO tarefasDTO, String token) {
         String email = jwtUtil.extrairEmailDoToken(token.substring(7));
         tarefasDTO.setDataCriacao(LocalDateTime.now());
-        tarefasDTO.setDataEvento(tarefasDTO.converterParaUTC(tarefasDTO.getDataEvento()));
         tarefasDTO.setStatusNotificacaoEnum(PENDENTE);
         tarefasDTO.setEmailUsuario(email);
 
@@ -33,6 +33,17 @@ public class TarefasService {
                 tarefaRepository.save(tarefaEntity)
         );
 
+    }
+
+    public List<TarefasDTO> buscarTarefasAgendadasPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal) {
+        return tarefasConverter.paraTarefasDTO(
+                tarefaRepository.findByDataEventoBetween(dataInicial, dataFinal));
+    }
+
+    public List<TarefasDTO> buscarTarefasPorEmail(String token) {
+        String email = jwtUtil.extrairEmailDoToken(token.substring(7));
+        List<TarefasEntity> listaTarefeas = tarefaRepository.findByEmailUsuario(email);
+        return tarefasConverter.paraTarefasDTO(listaTarefeas);
     }
 
 }

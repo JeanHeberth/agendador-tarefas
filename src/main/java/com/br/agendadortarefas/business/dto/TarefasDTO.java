@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -19,16 +16,14 @@ public class TarefasDTO {
     private String id;
     private String nomeTarefa;
     private String descricao;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime dataCriacao;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING, timezone = "America/Sao_Paulo")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime dataEvento;
     private String emailUsuario;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime dataAlteracao;
     private StatusNotificacaoEnum statusNotificacaoEnum;
 
 
-    public LocalDateTime converterParaUTC(LocalDateTime data) {
-        ZonedDateTime zdt = data.atZone(ZoneId.of("America/Sao_Paulo"));
-        return zdt.toLocalDateTime();
-    }
 }
